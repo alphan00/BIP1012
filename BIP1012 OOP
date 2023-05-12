@@ -1,0 +1,171 @@
+using System;
+using System.Collections.Generic;
+
+class Film {
+    public string ad;
+    public List<string> seanslar = new List<string>();
+}
+
+class Salon {
+    public string ad;
+    public int koltukSayisi;
+    public string ozellikler;
+}
+
+class Seans {
+    public Film film;
+    public Salon salon;
+    public string tarih;
+    public string saat;
+}
+
+class Rezervasyon {
+    public Seans seans;
+    public string musteriAdSoyad;
+    public int biletAdedi;
+    public List<int> koltukNumaralari = new List<int>();
+}
+
+class Program {
+    static void Main(string[] args) {
+        List<Film> filmler = new List<Film>();
+        List<Salon> salonlar = new List<Salon>();
+        List<Seans> seanslar = new List<Seans>();
+        List<Rezervasyon> rezervasyonlar = new List<Rezervasyon>();
+
+        while (true) {
+            Console.WriteLine("1. Film seanslarini yazdir");
+            Console.WriteLine("2. Film ekle");
+            Console.WriteLine("3. Salon ekle");
+            Console.WriteLine("4. Seans ekle");
+            Console.WriteLine("5. Rezervasyon ekle");
+            Console.WriteLine("6. Cikis");
+            Console.Write("Seciminiz: ");
+
+            int secim = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
+
+            switch (secim) {
+                case 1:
+                    filmSeanslariniYazdir(filmler, seanslar);
+                    break;
+
+                case 2:
+                    filmEkle(filmler);
+                    break;
+
+                case 3:
+                    salonEkle(salonlar);
+                    break;
+
+                case 4:
+                    seansEkle(filmler, salonlar, seanslar);
+                    break;
+
+                case 5:
+                    rezervasyonEkle(seanslar, rezervasyonlar);
+                    break;
+
+                case 6:
+                    Environment.Exit(0);
+                    break;
+
+                default:
+                    Console.WriteLine("Gecersiz secim!");
+                    break;
+            }
+
+            Console.WriteLine();
+        }
+    }
+
+    static void filmSeanslariniYazdir(List<Film> filmler, List<Seans> seanslar) {
+        Console.WriteLine("Filmler ve seanslar:");
+        foreach (Film film in filmler) {
+            Console.WriteLine(film.ad + ":");
+            foreach (string seans in film.seanslar) {
+                Console.WriteLine("\t" + seans + ":");
+                foreach (Seans s in seanslar) {
+                    if (s.film.ad == film.ad && s.saat == seans) {
+                        Console.WriteLine("\t\t" + s.tarih + " " + s.saat + " - " + s.salon.ad);
+                    }
+                }
+            }
+static void seansEkle(List<Film> filmler, List<Salon> salonlar, List<Seans> seanslar) {
+        Seans s = new Seans();
+
+        Console.WriteLine("Filmler:");
+        for (int i = 0; i < filmler.Count; i++) {
+            Console.WriteLine("{0}. {1}", i + 1, filmler[i].ad);
+        }
+
+        Console.Write("Film seciniz: ");
+        int filmIndex = Convert.ToInt32(Console.ReadLine()) - 1;
+        s.film = filmler[filmIndex];
+
+        Console.WriteLine("Salonlar:");
+        for (int i = 0; i < salonlar.Count; i++) {
+            Console.WriteLine("{0}. {1}", i + 1, salonlar[i].ad);
+        }
+
+        Console.Write("Salon seciniz: ");
+        int salonIndex = Convert.ToInt32(Console.ReadLine()) - 1;
+        s.salon = salonlar[salonIndex];
+
+        Console.Write("Tarih (gg.aa.yyyy): ");
+        s.tarih = Console.ReadLine();
+
+        Console.Write("Saat (ss.dd): ");
+        s.saat = Console.ReadLine();
+
+        seanslar.Add(s);
+        Console.WriteLine("Seans eklendi.");
+    }
+static void salonEkle(List<Salon> salonlar) {
+    Salon s = new Salon();
+
+    Console.Write("Salon adı: ");
+    s.ad = Console.ReadLine();
+
+    Console.Write("Salon kapasitesi: ");
+    s.koltukSayisi = Convert.ToInt32(Console.ReadLine());
+
+    salonlar.Add(s);
+   
+    static void rezervasyonEkle(List<Seans> seanslar, List<Rezervasyon> rezervasyonlar) {
+        Rezervasyon r = new Rezervasyon();
+
+        Console.WriteLine("Seanslar:");
+        for (int i = 0; i < seanslar.Count; i++) {
+            Console.WriteLine("{0}. {1} {2} {3}", i + 1, seanslar[i].film.ad, seanslar[i].tarih, seanslar[i].saat);
+        }
+
+        Console.Write("Seans seciniz: ");
+        int seansIndex = Convert.ToInt32(Console.ReadLine()) - 1;
+        r.seans = seanslar[seansIndex];
+
+        Console.Write("Musteri ad soyad: ");
+        r.musteriAdSoyad = Console.ReadLine();
+
+        Console.Write("Bilet adedi: ");
+        r.biletAdedi = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = 0; i < r.biletAdedi; i++) {
+            Console.Write("{0}. koltuk numarasi: ", i + 1);
+            int koltukNo = Convert.ToInt32(Console.ReadLine());
+            r.koltukNumaralari.Add(koltukNo);
+        }
+
+        rezervasyonlar.Add(r);
+        Console.WriteLine("Rezervasyon eklendi.");}}
+}
+
+
+
+}
+
+
+    
+
+
+
